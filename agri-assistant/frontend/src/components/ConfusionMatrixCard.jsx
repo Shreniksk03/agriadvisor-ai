@@ -1,3 +1,5 @@
+import SpotlightCard from './common/SpotlightCard';
+
 export default function ConfusionMatrixCard({ matrix }) {
   const m = matrix || {
     true_positive: 42,
@@ -13,115 +15,112 @@ export default function ConfusionMatrixCard({ matrix }) {
   const total = m.true_positive + m.false_positive + m.true_negative + m.false_negative;
 
   return (
-    <div className="glass-card p-6 bg-slate-900/80 border border-slate-800">
+    <SpotlightCard className="font-sans">
       <div className="flex items-center justify-between mb-1">
-        <h3 className="text-sm font-semibold text-slate-100 flex items-center gap-2">
-          <svg className="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-          </svg>
-          Model Confusion Matrix
+        <h3 className="text-xs tracking-wider text-slate-500 uppercase font-semibold">
+          Model Confusion Matrix & Transparency
         </h3>
-        <span className="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
+        <span className="text-[10px] font-mono text-blue-400 bg-blue-950/40 px-2 py-0.5 rounded border border-blue-500/20 font-semibold">
           3-Agent Validation
         </span>
       </div>
-      <p className="text-xs text-slate-400 mb-5">Classification precision across biological and soil telemetry tests</p>
+      <p className="text-xs text-slate-400 mb-5">Classification precision across multi-vector soil & biological tests</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Matrix Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        {/* Stark Matrix Grid */}
         <div>
           <div className="grid grid-cols-2 gap-2 mb-3">
             {/* Headers */}
-            <div className="col-span-2 grid grid-cols-[80px_1fr_1fr] gap-2 text-xs text-slate-400 font-mono mb-1">
+            <div className="col-span-2 grid grid-cols-[80px_1fr_1fr] gap-2 text-[11px] text-slate-500 font-mono mb-1">
               <div />
-              <div className="text-center">Predicted +</div>
-              <div className="text-center">Predicted −</div>
+              <div className="text-center font-bold">PRED +</div>
+              <div className="text-center font-bold">PRED −</div>
             </div>
 
             {/* Row 1: Actual Positive */}
             <div className="col-span-2 grid grid-cols-[80px_1fr_1fr] gap-2 items-stretch">
-              <div className="flex items-center text-xs text-slate-400 font-mono">Actual +</div>
-              <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-xl p-4 text-center hover:bg-emerald-500/25 transition-all">
-                <p className="text-2xl font-bold text-emerald-400 font-mono">{m.true_positive}</p>
-                <p className="text-[10px] text-emerald-400/90 font-medium mt-1">True Positive (TP)</p>
+              <div className="flex items-center text-[11px] text-slate-500 font-mono font-bold">ACTUAL +</div>
+              <div className="bg-emerald-900/30 border border-emerald-500/30 rounded-lg p-4 text-center">
+                <p className="text-3xl font-bold text-emerald-400 font-mono">{m.true_positive}</p>
+                <p className="text-[10px] text-emerald-400/80 font-mono mt-1 uppercase">True Positive</p>
               </div>
-              <div className="bg-rose-500/20 border border-rose-500/30 rounded-xl p-4 text-center hover:bg-rose-500/25 transition-all">
-                <p className="text-2xl font-bold text-rose-400 font-mono">{m.false_negative}</p>
-                <p className="text-[10px] text-rose-400/90 font-medium mt-1">False Negative (FN)</p>
+              <div className="bg-rose-900/30 border border-rose-500/30 rounded-lg p-4 text-center">
+                <p className="text-3xl font-bold text-rose-400 font-mono">{m.false_negative}</p>
+                <p className="text-[10px] text-rose-400/80 font-mono mt-1 uppercase">False Negative</p>
               </div>
             </div>
 
             {/* Row 2: Actual Negative */}
             <div className="col-span-2 grid grid-cols-[80px_1fr_1fr] gap-2 items-stretch">
-              <div className="flex items-center text-xs text-slate-400 font-mono">Actual −</div>
-              <div className="bg-rose-500/20 border border-rose-500/30 rounded-xl p-4 text-center hover:bg-rose-500/25 transition-all">
-                <p className="text-2xl font-bold text-rose-400 font-mono">{m.false_positive}</p>
-                <p className="text-[10px] text-rose-400/90 font-medium mt-1">False Positive (FP)</p>
+              <div className="flex items-center text-[11px] text-slate-500 font-mono font-bold">ACTUAL −</div>
+              <div className="bg-rose-900/30 border border-rose-500/30 rounded-lg p-4 text-center">
+                <p className="text-3xl font-bold text-rose-400 font-mono">{m.false_positive}</p>
+                <p className="text-[10px] text-rose-400/80 font-mono mt-1 uppercase">False Positive</p>
               </div>
-              <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-xl p-4 text-center hover:bg-emerald-500/25 transition-all">
-                <p className="text-2xl font-bold text-emerald-400 font-mono">{m.true_negative}</p>
-                <p className="text-[10px] text-emerald-400/90 font-medium mt-1">True Negative (TN)</p>
+              <div className="bg-emerald-900/30 border border-emerald-500/30 rounded-lg p-4 text-center">
+                <p className="text-3xl font-bold text-emerald-400 font-mono">{m.true_negative}</p>
+                <p className="text-[10px] text-emerald-400/80 font-mono mt-1 uppercase">True Negative</p>
               </div>
             </div>
           </div>
-          <p className="text-[11px] text-slate-400 text-center font-mono">Total verified cases: {total}</p>
+          <p className="text-[11px] text-slate-500 text-center font-mono">Sample Size: {total} Records</p>
         </div>
 
-        {/* Metrics */}
-        <div className="space-y-3 bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
-          <MetricBar label="Accuracy" value={m.accuracy} color="cyan" />
-          <MetricBar label="Precision" value={m.precision} color="blue" />
-          <MetricBar label="Recall" value={m.recall} color="emerald" />
-          <MetricBar label="F1 Score" value={m.f1_score} color="violet" />
+        {/* Metrics List */}
+        <div className="space-y-3 bg-[#080a0e] p-4 rounded-lg border border-white/5 font-mono">
+          <MetricBar label="ACCURACY" value={m.accuracy} color="blue" />
+          <MetricBar label="PRECISION" value={m.precision} color="cyan" />
+          <MetricBar label="RECALL" value={m.recall} color="emerald" />
+          <MetricBar label="F1_SCORE" value={m.f1_score} color="violet" />
 
-          {/* ROC Indicator */}
-          <div className="mt-4 pt-4 border-t border-slate-800">
-            <p className="text-xs text-slate-300 font-medium mb-2">ROC-AUC Benchmark</p>
+          {/* ROC-AUC Indicator */}
+          <div className="mt-4 pt-4 border-t border-white/5">
+            <p className="text-[10px] uppercase text-slate-500 tracking-wider mb-2 font-sans font-semibold">ROC-AUC Benchmark</p>
             <div className="space-y-2">
               <div>
                 <div className="flex justify-between text-[11px] mb-1">
-                  <span className="text-cyan-400 font-medium">AgriAdvisor 3-Agent Engine</span>
-                  <span className="text-cyan-400 font-mono font-bold">0.94</span>
+                  <span className="text-blue-400 font-sans font-medium">AgriAdvisor 3-Agent Engine</span>
+                  <span className="text-blue-400 font-bold">0.94</span>
                 </div>
-                <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full" style={{ width: '94%' }} />
+                <div className="h-1.5 bg-[#12151a] rounded-full overflow-hidden">
+                  <div className="h-full bg-blue-600 rounded-full" style={{ width: '94%' }} />
                 </div>
               </div>
               <div>
                 <div className="flex justify-between text-[11px] mb-1">
-                  <span className="text-slate-400">Baseline Static Heuristics</span>
-                  <span className="text-slate-400 font-mono">0.72</span>
+                  <span className="text-slate-500 font-sans">Baseline Static Heuristics</span>
+                  <span className="text-slate-500 font-bold">0.72</span>
                 </div>
-                <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-                  <div className="h-full bg-slate-600 rounded-full" style={{ width: '72%' }} />
+                <div className="h-1.5 bg-[#12151a] rounded-full overflow-hidden">
+                  <div className="h-full bg-slate-700 rounded-full" style={{ width: '72%' }} />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </SpotlightCard>
   );
 }
 
 function MetricBar({ label, value, color }) {
   const percent = Math.round(value * 100);
   const colorMap = {
-    blue: 'from-blue-500 to-blue-400',
-    cyan: 'from-cyan-500 to-cyan-400',
-    emerald: 'from-emerald-500 to-emerald-400',
-    violet: 'from-violet-500 to-violet-400',
+    blue: 'bg-blue-600',
+    cyan: 'bg-cyan-500',
+    emerald: 'bg-emerald-500',
+    violet: 'bg-purple-600',
   };
 
   return (
     <div>
       <div className="flex justify-between text-xs mb-1">
-        <span className="text-slate-300 font-medium">{label}</span>
-        <span className="font-mono text-slate-100 font-bold">{percent}%</span>
+        <span className="text-slate-400">{label}</span>
+        <span className="text-slate-200 font-bold">{value.toFixed(3)} ({percent}%)</span>
       </div>
-      <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+      <div className="h-1.5 bg-[#12151a] rounded-full overflow-hidden border border-white/5">
         <div
-          className={`h-full bg-gradient-to-r ${colorMap[color]} rounded-full transition-all duration-700`}
+          className={`h-full ${colorMap[color] || 'bg-blue-600'} rounded-full transition-all duration-500`}
           style={{ width: `${percent}%` }}
         />
       </div>

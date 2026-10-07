@@ -7,79 +7,74 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: {
-          900: '#0a0e1a',
-          800: '#0f1629',
-          700: '#141d38',
-          600: '#1a2547',
-          500: '#1f2d56',
+        surface: {
+          950: '#050505',
+          900: '#0a0a0a',
+          850: '#0d0f12',
+          800: '#12151a',
+          750: '#181c24',
         },
         slate: {
-          950: '#0c1222',
-          900: '#111827',
-          850: '#151f32',
+          950: '#080a0f',
+          900: '#0d0f12',
+          850: '#12151b',
+          800: '#1e2430',
+          700: '#334155',
+          600: '#475569',
+          500: '#64748b',
+          400: '#94a3b8',
+          300: '#cbd5e1',
+          200: '#e2e8f0',
+          100: '#f1f5f9',
         },
-        accent: {
-          blue: '#3b82f6',
-          cyan: '#06b6d4',
-          emerald: '#10b981',
-          violet: '#8b5cf6',
-          amber: '#f59e0b',
-          rose: '#f43f5e',
-        },
-        neon: {
-          blue: '#00a8ff',
-          green: '#00ff88',
-          purple: '#a855f7',
+        brand: {
+          blue: '#2563eb',
+          'blue-light': '#3b82f6',
+          'neon-blue': '#0088ff',
         },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        mono: ['JetBrains Mono', 'Fira Code', 'SFMono-Regular', 'Consolas', 'monospace'],
+      },
+      boxShadow: {
+        'neon-blue': '0 0 15px rgba(37, 99, 235, 0.5)',
+        'neon-cyan': '0 0 15px rgba(6, 182, 212, 0.4)',
+        'neon-emerald': '0 0 15px rgba(16, 185, 129, 0.4)',
+        'neon-rose': '0 0 15px rgba(244, 63, 94, 0.4)',
+        'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.5)',
+      },
+      backgroundImage: {
+        'app-mesh': 'radial-gradient(ellipse at top, #0f172a 0%, #0a0a0a 50%, #050505 100%)',
       },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'glow': 'glow 2s ease-in-out infinite alternate',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'slide-in': 'slideIn 0.3s ease-out',
-        'fade-in': 'fadeIn 0.5s ease-out',
-        'scan-line': 'scanLine 4s linear infinite',
-        'typing': 'typing 3.5s steps(40, end)',
-        'blink-caret': 'blink-caret .75s step-end infinite',
+        'fade-in': 'fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+        'slide-up': 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+        'blob': 'blob 15s infinite',
+        'blob-reverse': 'blob-reverse 20s infinite',
       },
       keyframes: {
-        glow: {
-          '0%': { boxShadow: '0 0 5px rgba(59, 130, 246, 0.3)' },
-          '100%': { boxShadow: '0 0 20px rgba(59, 130, 246, 0.6)' },
-        },
-        slideUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        slideIn: {
-          '0%': { opacity: '0', transform: 'translateX(-10px)' },
-          '100%': { opacity: '1', transform: 'translateX(0)' },
-        },
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        scanLine: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(100vh)' },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(12px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        typing: {
-          'from': { width: '0' },
-          'to': { width: '100%' },
+        blob: {
+          '0%': { transform: 'translate(0px, 0px) scale(1)' },
+          '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+          '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+          '100%': { transform: 'translate(0px, 0px) scale(1)' },
         },
-        'blink-caret': {
-          'from, to': { borderColor: 'transparent' },
-          '50%': { borderColor: '#3b82f6' },
+        'blob-reverse': {
+          '0%': { transform: 'translate(0px, 0px) scale(1)' },
+          '33%': { transform: 'translate(-30px, 50px) scale(1.2)' },
+          '66%': { transform: 'translate(20px, -20px) scale(0.8)' },
+          '100%': { transform: 'translate(0px, 0px) scale(1)' },
         },
-      },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'mesh-gradient': 'linear-gradient(135deg, #0a0e1a 0%, #141d38 25%, #0f1629 50%, #1a2547 75%, #0a0e1a 100%)',
       },
     },
   },

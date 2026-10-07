@@ -68,39 +68,37 @@ export default function PolicySimulator() {
   ];
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in font-sans">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-3">
-            <span className="p-2 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-400">
-              <Sliders className="w-6 h-6" />
-            </span>
+          <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2">
+            <Sliders className="w-5 h-5 text-blue-500" />
             Yield & Policy Simulator
           </h1>
-          <p className="text-slate-300 text-sm mt-1">
-            Simulate policy threshold sensitivity, economic net benefit, and automated triage balance
+          <p className="text-slate-400 text-xs mt-0.5">
+            Calibrate autonomous threshold sensitivities and economic risk-reward distributions
           </p>
         </div>
 
         {/* Quick Presets */}
-        <div className="flex items-center gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800">
-          <span className="text-xs text-slate-400 font-medium px-2">Presets:</span>
+        <div className="flex items-center gap-2 bg-[#0d0f12] p-1.5 rounded-lg border border-white/5 font-mono text-xs">
+          <span className="text-slate-500 px-2 uppercase text-[10px]">Presets:</span>
           <button
             onClick={() => applyPreset('AGGRESSIVE')}
-            className="px-2.5 py-1 rounded-lg text-xs bg-slate-950 text-slate-300 hover:text-white border border-slate-800 hover:border-cyan-500/30 transition-all font-medium"
+            className="px-2.5 py-1 rounded bg-[#12151a] text-slate-300 hover:text-white hover:bg-blue-600 transition-all border border-white/5"
           >
-            Aggressive Defense
+            Aggressive
           </button>
           <button
             onClick={() => applyPreset('BALANCED')}
-            className="px-2.5 py-1 rounded-lg text-xs bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/25 transition-all font-medium"
+            className="px-2.5 py-1 rounded bg-blue-600/20 text-blue-400 border border-blue-500/30 hover:bg-blue-600 hover:text-white transition-all font-semibold"
           >
             Balanced
           </button>
           <button
             onClick={() => applyPreset('CONSERVATIVE')}
-            className="px-2.5 py-1 rounded-lg text-xs bg-slate-950 text-slate-300 hover:text-white border border-slate-800 hover:border-cyan-500/30 transition-all font-medium"
+            className="px-2.5 py-1 rounded bg-[#12151a] text-slate-300 hover:text-white hover:bg-blue-600 transition-all border border-white/5"
           >
             Cost Guard
           </button>
@@ -108,19 +106,19 @@ export default function PolicySimulator() {
       </div>
 
       {/* Control Sliders Card */}
-      <div className="glass-card p-6 bg-slate-900/85 border border-slate-800 rounded-2xl">
-        <h2 className="text-sm font-semibold text-slate-100 uppercase tracking-wider mb-6 flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-cyan-400" />
-          Autonomous Arbiter Calibration Controls
+      <div className="bg-[#0d0f12] border border-white/5 rounded-xl p-6">
+        <h2 className="text-xs tracking-wider text-slate-500 uppercase font-semibold mb-6 flex items-center gap-2">
+          <Zap className="w-4 h-4 text-blue-500" />
+          Autonomous Arbiter Calibration Sliders
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Risk Threshold Slider */}
-          <div className="space-y-3 p-4 bg-slate-950 rounded-xl border border-slate-800">
+          <div className="space-y-3 p-4 bg-[#080a0e] rounded-lg border border-white/5">
             <div className="flex justify-between items-center">
-              <label className="text-xs font-medium text-slate-300">Auto-Approval Risk Cap</label>
-              <span className="font-mono text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                Score &lt; {riskThreshold}
+              <label className="text-xs text-slate-300 font-medium">Auto-Approval Risk Cap</label>
+              <span className="font-mono text-xs font-bold text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/20">
+                &lt; {riskThreshold}
               </span>
             </div>
             <input
@@ -130,18 +128,18 @@ export default function PolicySimulator() {
               step="5"
               value={riskThreshold}
               onChange={(e) => setRiskThreshold(Number(e.target.value))}
-              className="w-full accent-cyan-500"
+              className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
             />
-            <p className="text-[11px] text-slate-400">
-              Fields scoring below this score are automatically dispatched without human intervention.
+            <p className="text-[11px] text-slate-500">
+              Score threshold for automated protocol dispatch without human sign-off.
             </p>
           </div>
 
           {/* Auto Intervention Budget */}
-          <div className="space-y-3 p-4 bg-slate-950 rounded-xl border border-slate-800">
+          <div className="space-y-3 p-4 bg-[#080a0e] rounded-lg border border-white/5">
             <div className="flex justify-between items-center">
-              <label className="text-xs font-medium text-slate-300">Auto-Intervention Budget</label>
-              <span className="font-mono text-xs font-bold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
+              <label className="text-xs text-slate-300 font-medium">Auto-Intervention Budget</label>
+              <span className="font-mono text-xs font-bold text-blue-400 bg-blue-950/40 px-2 py-0.5 rounded border border-blue-500/20">
                 ${autoInterventionLimit}/ha
               </span>
             </div>
@@ -152,19 +150,19 @@ export default function PolicySimulator() {
               step="50"
               value={autoInterventionLimit}
               onChange={(e) => setAutoInterventionLimit(Number(e.target.value))}
-              className="w-full accent-cyan-500"
+              className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
             />
-            <p className="text-[11px] text-slate-400">
-              Maximum expenditure per hectare permitted for automated fertilizer and chemical orders.
+            <p className="text-[11px] text-slate-500">
+              Maximum financial expenditure permitted per hectare for automated chemical/fertilizer orders.
             </p>
           </div>
 
           {/* Escalation Threshold */}
-          <div className="space-y-3 p-4 bg-slate-950 rounded-xl border border-slate-800">
+          <div className="space-y-3 p-4 bg-[#080a0e] rounded-lg border border-white/5">
             <div className="flex justify-between items-center">
-              <label className="text-xs font-medium text-slate-300">Mandatory Escalation Threshold</label>
-              <span className="font-mono text-xs font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">
-                Score ≥ {escalationThreshold}
+              <label className="text-xs text-slate-300 font-medium">Escalation Threshold</label>
+              <span className="font-mono text-xs font-bold text-rose-400 bg-rose-950/40 px-2 py-0.5 rounded border border-rose-500/20">
+                ≥ {escalationThreshold}
               </span>
             </div>
             <input
@@ -174,10 +172,10 @@ export default function PolicySimulator() {
               step="5"
               value={escalationThreshold}
               onChange={(e) => setEscalationThreshold(Number(e.target.value))}
-              className="w-full accent-rose-500"
+              className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-rose-500"
             />
-            <p className="text-[11px] text-slate-400">
-              Fields scoring at or above this score trigger immediate alerts and mandatory agronomist review.
+            <p className="text-[11px] text-slate-500">
+              Score threshold triggering mandatory human agronomist review.
             </p>
           </div>
         </div>
@@ -185,63 +183,64 @@ export default function PolicySimulator() {
 
       {/* Projected KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="glass-card p-5 bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 border border-emerald-500/30 bg-slate-900/85 rounded-2xl">
-          <p className="text-xs text-slate-400 font-medium">Net Projected Benefit</p>
-          <p className="text-2xl font-bold text-emerald-400 mt-1 font-mono">
+        <div className="bg-[#0d0f12] border border-white/5 rounded-xl p-5 flex flex-col justify-between h-32">
+          <p className="text-xs tracking-wider text-slate-500 uppercase font-semibold">Net Economic Benefit</p>
+          <p className="text-3xl font-bold text-emerald-400 font-mono">
             +${yieldMetrics.net_benefit?.toLocaleString() || 0}
           </p>
-          <p className="text-[11px] text-slate-400 mt-1">Prevented Loss minus Cost</p>
+          <p className="text-[10px] text-slate-500 font-mono">Prevented Loss − Cost</p>
         </div>
 
-        <div className="glass-card p-5 bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/30 bg-slate-900/85 rounded-2xl">
-          <p className="text-xs text-slate-400 font-medium">Yield Optimization Score</p>
-          <p className="text-2xl font-bold text-cyan-400 mt-1 font-mono">
+        <div className="bg-[#0d0f12] border border-white/5 rounded-xl p-5 flex flex-col justify-between h-32">
+          <p className="text-xs tracking-wider text-slate-500 uppercase font-semibold">Optimization Score</p>
+          <p className="text-3xl font-bold text-blue-400 font-mono">
             {yieldMetrics.yield_optimization_score || 0}%
           </p>
-          <p className="text-[11px] text-slate-400 mt-1">Expected yield preservation</p>
+          <p className="text-[10px] text-slate-500 font-mono">Yield Preservation</p>
         </div>
 
-        <div className="glass-card p-5 bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-500/30 bg-slate-900/85 rounded-2xl">
-          <p className="text-xs text-slate-400 font-medium">Auto-Approval Rate</p>
-          <p className="text-2xl font-bold text-blue-400 mt-1 font-mono">
+        <div className="bg-[#0d0f12] border border-white/5 rounded-xl p-5 flex flex-col justify-between h-32">
+          <p className="text-xs tracking-wider text-slate-500 uppercase font-semibold">Auto-Approval Rate</p>
+          <p className="text-3xl font-bold text-slate-100 font-mono">
             {simOverview.auto_approval_rate || 0}%
           </p>
-          <p className="text-[11px] text-slate-400 mt-1">{simOverview.auto_approved} automated dispatches</p>
+          <p className="text-[10px] text-slate-500 font-mono">{simOverview.auto_approved} Dispatches</p>
         </div>
 
-        <div className="glass-card p-5 bg-gradient-to-br from-rose-500/20 to-rose-500/5 border border-rose-500/30 bg-slate-900/85 rounded-2xl">
-          <p className="text-xs text-slate-400 font-medium">Escalation Rate</p>
-          <p className="text-2xl font-bold text-rose-400 mt-1 font-mono">
+        <div className="bg-[#0d0f12] border border-white/5 rounded-xl p-5 flex flex-col justify-between h-32">
+          <p className="text-xs tracking-wider text-slate-500 uppercase font-semibold">Escalation Rate</p>
+          <p className="text-3xl font-bold text-rose-400 font-mono">
             {simOverview.escalation_rate || 0}%
           </p>
-          <p className="text-[11px] text-slate-400 mt-1">{simOverview.escalated_to_human} agronomist interventions</p>
+          <p className="text-[10px] text-slate-500 font-mono">{simOverview.escalated_to_human} Human Reviews</p>
         </div>
       </div>
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Triage Volume Bar Chart */}
-        <div className="glass-card p-6 bg-slate-900/85 border border-slate-800 rounded-2xl">
-          <h3 className="text-sm font-semibold text-slate-100 mb-4 flex items-center gap-2">
-            <BarChart3 className="w-4 h-4 text-cyan-400" />
-            Triage Volume by Policy Threshold
+        <div className="bg-[#0d0f12] border border-white/5 rounded-xl p-6">
+          <h3 className="text-xs tracking-wider text-slate-500 uppercase font-semibold mb-4 flex items-center gap-2">
+            <BarChart3 className="w-4 h-4 text-blue-500" />
+            Triage Volume Breakdown
           </h3>
-          <div className="h-64">
+          <div className="h-60">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={comparisonData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="name" stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 11 }} />
-                <YAxis stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 11 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#1e2430" />
+                <XAxis dataKey="name" stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 11, fontFamily: 'monospace' }} />
+                <YAxis stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 11, fontFamily: 'monospace' }} />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#020617',
-                    borderColor: '#334155',
+                    backgroundColor: '#0a0c10',
+                    borderColor: 'rgba(255,255,255,0.1)',
                     borderRadius: '8px',
-                    color: '#f8fafc',
+                    color: '#f1f5f9',
                     fontSize: '12px',
+                    fontFamily: 'monospace',
                   }}
                 />
-                <Bar dataKey="count" radius={[6, 6, 0, 0]}>
+                <Bar dataKey="count" radius={[4, 4, 0, 0]}>
                   {comparisonData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.fill} />
                   ))}
@@ -251,34 +250,35 @@ export default function PolicySimulator() {
           </div>
         </div>
 
-        {/* Field Risk Score Scatter / Area Curve */}
-        <div className="glass-card p-6 bg-slate-900/85 border border-slate-800 rounded-2xl">
-          <h3 className="text-sm font-semibold text-slate-100 mb-4 flex items-center gap-2">
-            <LineIcon className="w-4 h-4 text-cyan-400" />
-            Field Risk Distribution vs Policy Thresholds
+        {/* Field Risk Distribution Area */}
+        <div className="bg-[#0d0f12] border border-white/5 rounded-xl p-6">
+          <h3 className="text-xs tracking-wider text-slate-500 uppercase font-semibold mb-4 flex items-center gap-2">
+            <LineIcon className="w-4 h-4 text-blue-500" />
+            Risk Distribution vs Thresholds
           </h3>
-          <div className="h-64">
+          <div className="h-60">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={distribution}>
                 <defs>
-                  <linearGradient id="riskGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#06b6d4" stopOpacity={0} />
+                  <linearGradient id="blueRiskGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#2563eb" stopOpacity={0.7} />
+                    <stop offset="95%" stopColor="#2563eb" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="advisory_index" stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 11 }} label={{ value: 'Sample Field Index', position: 'insideBottom', offset: -5, fill: '#64748b', fontSize: 10 }} />
-                <YAxis stroke="#64748b" domain={[0, 100]} tick={{ fill: '#94a3b8', fontSize: 11 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#1e2430" />
+                <XAxis dataKey="advisory_index" stroke="#64748b" tick={{ fill: '#94a3b8', fontSize: 11, fontFamily: 'monospace' }} />
+                <YAxis stroke="#64748b" domain={[0, 100]} tick={{ fill: '#94a3b8', fontSize: 11, fontFamily: 'monospace' }} />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#020617',
-                    borderColor: '#334155',
+                    backgroundColor: '#0a0c10',
+                    borderColor: 'rgba(255,255,255,0.1)',
                     borderRadius: '8px',
-                    color: '#f8fafc',
+                    color: '#f1f5f9',
                     fontSize: '12px',
+                    fontFamily: 'monospace',
                   }}
                 />
-                <Area type="monotone" dataKey="risk_score" stroke="#22d3ee" fillOpacity={1} fill="url(#riskGrad)" />
+                <Area type="monotone" dataKey="risk_score" stroke="#3b82f6" strokeWidth={2} fillOpacity={1} fill="url(#blueRiskGrad)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -286,19 +286,17 @@ export default function PolicySimulator() {
       </div>
 
       {/* Sensitivity Assessment Note */}
-      <div className="glass-card p-5 border border-cyan-500/30 bg-cyan-500/10 bg-slate-900/85 rounded-2xl">
-        <div className="flex items-start gap-3">
-          <div className="p-2.5 rounded-xl bg-cyan-500/15 text-cyan-400 shrink-0 border border-cyan-500/30">
-            <Zap className="w-5 h-5" />
-          </div>
-          <div>
-            <h4 className="text-sm font-semibold text-slate-100">Policy Impact & Recommendation</h4>
-            <p className="text-xs text-slate-300 mt-1">
-              {simResults?.threshold_impact?.sensitivity_note || 'Simulation calculated optimal parameters for current harvest season.'}
-            </p>
-            <div className="mt-2 text-[11px] text-slate-400 font-mono">
-              Projected chemical cost: ${yieldMetrics.resource_cost_projection || 0} | Prevented damage estimate: ${yieldMetrics.prevented_loss_value || 0}
-            </div>
+      <div className="bg-[#0d0f12] border border-white/5 rounded-xl p-5 flex items-start gap-3">
+        <div className="p-2 rounded-lg bg-blue-600/10 text-blue-400 shrink-0 border border-blue-500/20">
+          <Zap className="w-4 h-4" />
+        </div>
+        <div>
+          <h4 className="text-xs font-semibold text-slate-200 uppercase tracking-wider font-sans">Policy Calibration Summary</h4>
+          <p className="text-xs text-slate-400 mt-1 font-sans leading-relaxed">
+            {simResults?.threshold_impact?.sensitivity_note || 'Simulation parameters balanced for maximum harvest yield preservation.'}
+          </p>
+          <div className="mt-2 text-[11px] text-slate-500 font-mono">
+            Chemical Expenditure: ${yieldMetrics.resource_cost_projection || 0} | Prevented Damage: ${yieldMetrics.prevented_loss_value || 0}
           </div>
         </div>
       </div>

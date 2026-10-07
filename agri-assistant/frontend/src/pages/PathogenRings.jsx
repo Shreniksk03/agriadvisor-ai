@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ShieldAlert, Activity, Share2, Zap, AlertTriangle, CheckCircle, Radio } from 'lucide-react';
+import { ShieldAlert, Share2, Zap, Radio } from 'lucide-react';
 import { analyticsAPI } from '../lib/api';
 
 export default function PathogenRings() {
@@ -74,32 +74,30 @@ export default function PathogenRings() {
   );
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in font-sans">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-3">
-            <span className="p-2 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-400">
-              <Share2 className="w-6 h-6" />
-            </span>
+          <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2">
+            <Share2 className="w-5 h-5 text-blue-500" />
             Pathogen Transmission Rings
           </h1>
-          <p className="text-slate-300 text-sm mt-1">
-            Dynamic node-based biological vector network modeling cross-field infection transmission
+          <p className="text-slate-400 text-xs mt-0.5">
+            Dynamic node-based biological vector network mapping shared identities and infection propagation
           </p>
         </div>
 
         {/* Severity filter */}
-        <div className="flex items-center gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800">
-          <span className="text-xs text-slate-400 font-medium px-2">Severity:</span>
+        <div className="flex items-center gap-1.5 bg-[#0d0f12] p-1.5 rounded-lg border border-white/5 font-mono text-xs">
+          <span className="text-slate-500 px-2 uppercase text-[10px]">Severity:</span>
           {['ALL', 'CRITICAL', 'HIGH', 'MODERATE'].map((sev) => (
             <button
               key={sev}
               onClick={() => setFilterSeverity(sev)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`px-2.5 py-1 rounded transition-all ${
                 filterSeverity === sev
-                  ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-blue-600 text-white font-semibold shadow-[0_0_12px_rgba(37,99,235,0.4)]'
+                  : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               {sev}
@@ -108,30 +106,34 @@ export default function PathogenRings() {
         </div>
       </div>
 
-      {/* Main Grid: SVG Graph + Details Panel */}
+      {/* Main Grid: Pitch-Black SVG Graph + Details Panel */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Interactive Graph Canvas */}
-        <div className="lg:col-span-2 glass-card p-6 flex flex-col items-center justify-center relative overflow-hidden bg-slate-900/85 border border-slate-800">
-          <div className="absolute top-4 left-4 text-xs font-mono text-slate-400 flex items-center gap-2">
-            <Radio className="w-4 h-4 text-cyan-400 animate-pulse" />
+        {/* Interactive Pitch-Black Graph Canvas */}
+        <div className="lg:col-span-2 bg-[#000000] border border-white/5 rounded-xl p-6 flex flex-col items-center justify-center relative overflow-hidden">
+          <div className="absolute top-4 left-4 text-[10px] font-mono text-slate-500 flex items-center gap-2">
+            <Radio className="w-3.5 h-3.5 text-blue-400 animate-pulse" />
             <span>DYNAMIC NODE NETWORK · TOPOLOGICAL VECTOR ENGINE</span>
           </div>
 
-          <div className="absolute top-4 right-4 flex items-center gap-4 text-xs text-slate-400 font-mono">
+          <div className="absolute top-4 right-4 flex items-center gap-3 text-[11px] text-slate-400 font-mono">
             <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-emerald-500 border border-emerald-400 inline-block" />
-              <span>Field Nodes</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" />
+              <span>Fields</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-rose-500 border border-rose-400 inline-block" />
-              <span>Pathogen Nodes</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" />
+              <span>Pathogens</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block" />
+              <span>Vectors</span>
             </div>
           </div>
 
           {loading ? (
             <div className="py-36 text-center">
               <div className="spinner mx-auto mb-3" />
-              <p className="text-slate-400 text-xs font-mono">Synthesizing topological pathogen graph...</p>
+              <p className="text-slate-500 text-xs font-mono">Synthesizing topological pathogen graph...</p>
             </div>
           ) : (
             <div className="w-full max-w-[640px] h-[520px] flex items-center justify-center">
@@ -142,8 +144,8 @@ export default function PathogenRings() {
                   cy={centerY}
                   r={fieldRadius}
                   fill="none"
-                  stroke="#1e293b"
-                  strokeWidth="1.5"
+                  stroke="rgba(255,255,255,0.05)"
+                  strokeWidth="1"
                   strokeDasharray="4 4"
                 />
                 <circle
@@ -151,12 +153,12 @@ export default function PathogenRings() {
                   cy={centerY}
                   r={pathogenRadius}
                   fill="none"
-                  stroke="#334155"
-                  strokeWidth="1.5"
+                  stroke="rgba(255,255,255,0.05)"
+                  strokeWidth="1"
                   strokeDasharray="2 2"
                 />
 
-                {/* Vector Links */}
+                {/* Vector Links - very faint thin white lines: stroke-white/10 */}
                 {links.map((link, idx) => {
                   const sourcePos = nodePositions[link.source];
                   const targetPos = nodePositions[link.target];
@@ -173,17 +175,17 @@ export default function PathogenRings() {
                         y1={sourcePos.y}
                         x2={targetPos.x}
                         y2={targetPos.y}
-                        stroke={isHighlighted ? '#f43f5e' : '#38bdf8'}
-                        strokeWidth={isHighlighted ? 3 : link.strength * 2.2}
-                        strokeOpacity={isDimmed ? 0.12 : isHighlighted ? 0.95 : 0.35}
-                        strokeDasharray={isHighlighted ? '5 3' : 'none'}
+                        stroke={isHighlighted ? '#3b82f6' : 'rgba(255, 255, 255, 0.1)'}
+                        strokeWidth={isHighlighted ? 2.5 : 1}
+                        strokeOpacity={isDimmed ? 0.05 : isHighlighted ? 1 : 0.4}
+                        strokeDasharray={isHighlighted ? '4 2' : 'none'}
                         className={isHighlighted ? 'animate-pulse' : ''}
                       />
                     </g>
                   );
                 })}
 
-                {/* Nodes */}
+                {/* Nodes - Small brightly colored scatter nodes (blue/green/red) */}
                 {Object.values(nodePositions).map((node) => {
                   const isSelected = selectedNode?.id === node.id;
                   const isConnected = connectedNodeIds.has(node.id);
@@ -197,11 +199,11 @@ export default function PathogenRings() {
                       className="cursor-pointer transition-all duration-300 group"
                       opacity={isDimmed ? 0.2 : 1}
                     >
-                      {/* Pulse ring for critical/high nodes */}
+                      {/* Pulse ring for critical nodes */}
                       {node.severity === 'CRITICAL' && (
                         <circle
-                          r="18"
-                          fill="#f43f5e"
+                          r="14"
+                          fill="#ef4444"
                           opacity="0.25"
                           className="animate-ping"
                         />
@@ -210,31 +212,32 @@ export default function PathogenRings() {
                       {/* Halo on selection */}
                       {isSelected && (
                         <circle
-                          r="22"
+                          r="16"
                           fill="none"
-                          stroke={node.type === 'pathogen' ? '#f43f5e' : '#06b6d4'}
-                          strokeWidth="2.5"
+                          stroke={node.type === 'pathogen' ? '#ef4444' : '#3b82f6'}
+                          strokeWidth="2"
                           strokeDasharray="3 3"
                         />
                       )}
 
                       {/* Main Node Circle */}
                       <circle
-                        r={node.type === 'pathogen' ? 14 : 11}
-                        fill={node.color || (node.type === 'pathogen' ? '#f43f5e' : '#10b981')}
-                        stroke="#020617"
-                        strokeWidth="2.5"
+                        r={node.type === 'pathogen' ? 8 : 6}
+                        fill={node.color || (node.type === 'pathogen' ? '#ef4444' : '#10b981')}
+                        stroke="#000000"
+                        strokeWidth="1.5"
                         className="hover:scale-125 transition-transform"
                       />
 
                       {/* Node Label */}
                       <text
-                        y={node.type === 'pathogen' ? 26 : -16}
+                        y={node.type === 'pathogen' ? 20 : -12}
                         textAnchor="middle"
-                        fill="#f1f5f9"
-                        fontSize="10"
-                        fontWeight="600"
-                        className="pointer-events-none drop-shadow font-sans"
+                        fill="#cbd5e1"
+                        fontSize="9"
+                        fontWeight="500"
+                        fontFamily="monospace"
+                        className="pointer-events-none select-none"
                       >
                         {node.label || node.id}
                       </text>
@@ -247,16 +250,16 @@ export default function PathogenRings() {
         </div>
 
         {/* Selected Node Details & Threat Analysis */}
-        <div className="glass-card p-6 space-y-5 flex flex-col justify-between bg-slate-900/85 border border-slate-800">
+        <div className="bg-[#0d0f12] border border-white/5 rounded-xl p-6 space-y-5 flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-              <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
-                <ShieldAlert className="w-5 h-5 text-rose-400" />
+            <div className="flex items-center justify-between border-b border-white/5 pb-4">
+              <h3 className="text-xs tracking-wider text-slate-500 uppercase font-semibold flex items-center gap-2">
+                <ShieldAlert className="w-4 h-4 text-rose-500" />
                 Vector Threat Intel
               </h3>
               {selectedNode && (
-                <span className={`text-[10px] px-2.5 py-1 rounded-full font-mono font-bold uppercase border ${
-                  selectedNode.type === 'pathogen' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
+                <span className={`text-[10px] px-2 py-0.5 rounded font-mono font-bold uppercase border ${
+                  selectedNode.type === 'pathogen' ? 'bg-rose-950/40 text-rose-400 border-rose-500/30' : 'bg-emerald-950/40 text-emerald-400 border-emerald-500/30'
                 }`}>
                   {selectedNode.type}
                 </span>
@@ -265,17 +268,17 @@ export default function PathogenRings() {
 
             {selectedNode ? (
               <div className="space-y-4 mt-4">
-                <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 space-y-2.5 text-xs">
+                <div className="p-3.5 bg-[#080a0e] rounded-lg border border-white/5 space-y-2 text-xs">
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-400">Node Identifier:</span>
-                    <span className="font-mono font-bold text-slate-100">{selectedNode.label || selectedNode.id}</span>
+                    <span className="text-slate-500 font-sans">Node Identifier:</span>
+                    <span className="font-mono font-bold text-slate-200">{selectedNode.label || selectedNode.id}</span>
                   </div>
 
                   {selectedNode.severity && (
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-400">Threat Severity:</span>
-                      <span className={`font-bold ${
-                        selectedNode.severity === 'CRITICAL' ? 'text-rose-400' : selectedNode.severity === 'HIGH' ? 'text-amber-400' : 'text-cyan-400'
+                      <span className="text-slate-500 font-sans">Threat Severity:</span>
+                      <span className={`font-mono font-bold ${
+                        selectedNode.severity === 'CRITICAL' ? 'text-rose-400' : selectedNode.severity === 'HIGH' ? 'text-amber-400' : 'text-blue-400'
                       }`}>
                         {selectedNode.severity}
                       </span>
@@ -284,33 +287,33 @@ export default function PathogenRings() {
 
                   {selectedNode.crop && (
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-400">Host Crop:</span>
-                      <span className="text-emerald-400 font-semibold">{selectedNode.crop}</span>
+                      <span className="text-slate-500 font-sans">Host Crop:</span>
+                      <span className="text-emerald-400 font-mono font-semibold">{selectedNode.crop}</span>
                     </div>
                   )}
 
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-400">Active Transmission Links:</span>
-                    <span className="font-mono font-bold text-cyan-400">{connectedLinks.length}</span>
+                    <span className="text-slate-500 font-sans">Active Transmission Links:</span>
+                    <span className="font-mono font-bold text-blue-400">{connectedLinks.length}</span>
                   </div>
                 </div>
 
                 {/* Connected Links Breakdown */}
                 <div>
-                  <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                  <h4 className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2 font-sans">
                     Infection Vectors & Pathogens
                   </h4>
                   <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
                     {connectedLinks.map((link, idx) => (
                       <div
                         key={idx}
-                        className="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-xs flex items-center justify-between"
+                        className="p-2.5 rounded-lg bg-[#080a0e] border border-white/5 text-xs flex items-center justify-between"
                       >
                         <div>
-                          <p className="font-medium text-slate-200">
+                          <p className="font-medium text-slate-200 font-mono text-[11px]">
                             {link.source === selectedNode.id ? link.target : link.source}
                           </p>
-                          <p className="text-[10px] text-slate-400">{link.label || 'Spore propagation'}</p>
+                          <p className="text-[10px] text-slate-500">{link.label || 'Spore propagation'}</p>
                         </div>
                         <span className="font-mono font-bold text-rose-400 text-xs">
                           {Math.round(link.strength * 100)}% risk
@@ -321,21 +324,21 @@ export default function PathogenRings() {
                 </div>
               </div>
             ) : (
-              <div className="py-12 text-center text-slate-400 text-xs">
-                Select any node on the ring to inspect infection vectors and transmission strength
+              <div className="py-12 text-center text-slate-500 text-xs font-mono">
+                Select any node on the network ring to inspect infection vectors and transmission strength
               </div>
             )}
           </div>
 
           {/* Action Protocol */}
-          <div className="pt-4 border-t border-slate-800">
+          <div className="pt-4 border-t border-white/5">
             <button
-              onClick={() => alert(`Quarantine alert dispatched for ${selectedNode?.label || 'selected vector'}`)}
+              onClick={() => alert(`Quarantine containment dispatched for ${selectedNode?.label || 'selected vector'}`)}
               disabled={!selectedNode}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white text-xs font-bold shadow-lg shadow-rose-500/25 disabled:opacity-40 transition-all flex items-center justify-center gap-2"
+              className="w-full py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold shadow-[0_0_15px_rgba(37,99,235,0.5)] disabled:opacity-40 transition-all flex items-center justify-center gap-2 border border-white/10"
             >
-              <Zap className="w-4 h-4" />
-              Deploy Biosecurity Containment Protocol
+              <Zap className="w-3.5 h-3.5 fill-white" />
+              <span>Deploy Biosecurity Containment Protocol</span>
             </button>
           </div>
         </div>

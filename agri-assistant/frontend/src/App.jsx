@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './lib/AuthContext';
 import Layout from './components/Layout';
+import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import ScoreField from './pages/ScoreField';
 import BatchScoring from './pages/BatchScoring';
@@ -53,7 +54,13 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* Public Routes */}
+          {/* Root Landing Page */}
+          <Route path="/" element={<LandingPage />} />
+
+          {/* Cinematic Boot Sequence */}
+          <Route path="/boot" element={<BootSequence />} />
+
+          {/* Authentication Routes */}
           <Route
             path="/login"
             element={
@@ -70,7 +77,6 @@ export default function App() {
               </PublicRoute>
             }
           />
-          <Route path="/boot" element={<BootSequence />} />
 
           {/* Protected Application Layout */}
           <Route
@@ -90,9 +96,8 @@ export default function App() {
             <Route path="/advisory/:id" element={<AdvisoryDetail />} />
           </Route>
 
-          {/* Initial / Root Route -> Cinematic Boot Sequence */}
-          <Route path="/" element={<BootSequence />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

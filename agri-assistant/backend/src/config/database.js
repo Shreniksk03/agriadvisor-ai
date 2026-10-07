@@ -17,8 +17,29 @@ if (supabaseUrl && supabaseAnonKey && supabaseUrl !== 'https://your-project.supa
 // ─── In-Memory Fallback Store ────────────────────────────────────────────────
 // Provides a fully functional data layer when Supabase is not configured.
 // This allows the application to run standalone for development and demos.
+import bcrypt from 'bcryptjs';
+
+const DEMO_PASSWORD_HASH = bcrypt.hashSync('password123', 10);
+
 const memoryStore = {
-  users: [],
+  users: [
+    {
+      id: 'usr-evelyn-001',
+      email: 'evelyn@agriadvisor.ai',
+      password_hash: DEMO_PASSWORD_HASH,
+      full_name: 'Dr. Evelyn Vance',
+      role: 'lead_agronomist',
+      created_at: new Date().toISOString(),
+    },
+    {
+      id: 'usr-demo-002',
+      email: 'demo@agriadvisor.ai',
+      password_hash: DEMO_PASSWORD_HASH,
+      full_name: 'Demo Agronomist',
+      role: 'agronomist',
+      created_at: new Date().toISOString(),
+    },
+  ],
   fields: [],
   advisories: [],
   agent_execution_logs: [],

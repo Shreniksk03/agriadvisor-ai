@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, Activity, CheckCircle2, AlertTriangle, Play, Sliders, ToggleLeft, ToggleRight, ArrowRight } from 'lucide-react';
+import { Sparkles, Activity, CheckCircle2, AlertTriangle, Play, Sliders, ArrowRight, Zap } from 'lucide-react';
 import { advisoryAPI } from '../lib/api';
 import AgentReasoningTrace from '../components/AgentReasoningTrace';
 
@@ -9,7 +9,7 @@ const WEATHER_OPTIONS = ['Sunny', 'Heavy Rain', 'Drought', 'Frost', 'High Humidi
 
 const PRESETS = {
   BLIGHT_HIGH_RISK: {
-    name: '🔴 Critical Late Blight Vector',
+    name: '🔴 Late Blight Vector',
     field_id: 'FLD-2026-BLIGHT',
     crop_type: 'Corn',
     soil_ph: 5.2,
@@ -19,10 +19,9 @@ const PRESETS = {
     weather_forecast: 'Heavy Rain',
     prioritize_bio: true,
     emergency_drainage: true,
-    force_local_sim: false,
   },
   DROUGHT_DEFICIT: {
-    name: '🟠 Severe Drought & Nitrogen Loss',
+    name: '🟠 Severe Drought',
     field_id: 'FLD-2026-DROUGHT',
     crop_type: 'Wheat',
     soil_ph: 7.8,
@@ -32,10 +31,9 @@ const PRESETS = {
     weather_forecast: 'Drought',
     prioritize_bio: false,
     emergency_drainage: false,
-    force_local_sim: false,
   },
   OPTIMAL_BASELINE: {
-    name: '🟢 Healthy Baseline (Auto-Approve)',
+    name: '🟢 Healthy Baseline',
     field_id: 'FLD-2026-BASELINE',
     crop_type: 'Soybean',
     soil_ph: 6.6,
@@ -45,7 +43,6 @@ const PRESETS = {
     weather_forecast: 'Sunny',
     prioritize_bio: true,
     emergency_drainage: false,
-    force_local_sim: false,
   },
 };
 
@@ -60,7 +57,6 @@ export default function ScoreField() {
     weather_forecast: 'Sunny',
     prioritize_bio: true,
     emergency_drainage: false,
-    force_local_sim: false,
   });
 
   const [result, setResult] = useState(null);
@@ -109,30 +105,28 @@ export default function ScoreField() {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in font-sans">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-100 flex items-center gap-3">
-            <span className="p-2 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-400">
-              <Sparkles className="w-6 h-6" />
-            </span>
+          <h1 className="text-xl font-bold text-slate-100 flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-blue-500" />
             Score a Crop Field
           </h1>
-          <p className="text-slate-300 text-sm mt-1">
-            Submit multi-channel field telemetry for real-time 3-agent autonomous diagnosis and prescription
+          <p className="text-slate-400 text-xs mt-0.5">
+            Submit multi-channel field telemetry for real-time 3-agent autonomous diagnosis
           </p>
         </div>
 
-        {/* Quick Scenario Sandbox Presets */}
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs text-slate-400 font-medium">Quick Presets:</span>
+        {/* Quick Presets */}
+        <div className="flex flex-wrap items-center gap-2 bg-[#0d0f12] p-1.5 rounded-lg border border-white/5 font-mono text-xs">
+          <span className="text-slate-500 px-2 uppercase text-[10px]">Presets:</span>
           {Object.entries(PRESETS).map(([key, p]) => (
             <button
               key={key}
               type="button"
               onClick={() => applyPreset(key)}
-              className="px-2.5 py-1 rounded-lg text-xs bg-slate-900 text-slate-300 hover:text-white border border-slate-800 hover:border-cyan-500/40 transition-all font-medium"
+              className="px-2.5 py-1 rounded bg-[#12151a] text-slate-300 hover:text-white hover:bg-blue-600 transition-all border border-white/5"
             >
               {p.name.split(' ')[0]} {p.crop_type}
             </button>
@@ -142,14 +136,14 @@ export default function ScoreField() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
         {/* Input Form */}
-        <div className="glass-card p-6 bg-slate-900/85 border border-slate-800 space-y-5">
-          <h2 className="text-sm font-semibold text-slate-100 flex items-center gap-2">
-            <Sliders className="w-4 h-4 text-cyan-400" />
-            Field Telemetry Sandbox Controls
+        <div className="bg-[#0d0f12] border border-white/5 rounded-xl p-6 space-y-5">
+          <h2 className="text-xs tracking-wider text-slate-500 uppercase font-semibold flex items-center gap-2">
+            <Sliders className="w-4 h-4 text-blue-500" />
+            Field Telemetry Input Sandbox
           </h2>
 
           {error && (
-            <div className="p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
+            <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-500/30 text-rose-400 text-xs flex items-center gap-2 font-mono">
               <AlertTriangle className="w-4 h-4 shrink-0" />
               {error}
             </div>
@@ -158,22 +152,22 @@ export default function ScoreField() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">Field Identifier</label>
+                <label className="block text-xs font-medium text-slate-400 mb-1.5">Field Identifier</label>
                 <input
                   type="text"
                   value={form.field_id}
                   onChange={(e) => handleChange('field_id', e.target.value)}
                   required
-                  className="w-full text-xs font-mono bg-slate-950 border-slate-800 text-slate-200"
+                  className="w-full text-xs font-mono bg-[#080a0e] border border-slate-800 rounded-xl px-3 py-2 text-slate-200 focus:border-blue-500 focus:shadow-[0_0_10px_rgba(37,99,235,0.4)] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1.5">Target Crop</label>
+                <label className="block text-xs font-medium text-slate-400 mb-1.5">Target Crop</label>
                 <select
                   value={form.crop_type}
                   onChange={(e) => handleChange('crop_type', e.target.value)}
-                  className="w-full text-xs bg-slate-950 border-slate-800 text-slate-200 rounded-xl"
+                  className="w-full text-xs bg-[#080a0e] border border-slate-800 rounded-xl px-3 py-2 text-slate-200 focus:border-blue-500 focus:shadow-[0_0_10px_rgba(37,99,235,0.4)] focus:outline-none"
                 >
                   {CROP_TYPES.map((c) => (
                     <option key={c} value={c}>
@@ -184,12 +178,12 @@ export default function ScoreField() {
               </div>
             </div>
 
-            {/* Metric Sliders & Inputs */}
+            {/* Metrics */}
             <div className="grid grid-cols-3 gap-3">
-              <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
+              <div className="p-3 bg-[#080a0e] rounded-xl border border-slate-800">
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-[11px] text-slate-400 font-medium">Soil pH</span>
-                  <span className="font-mono text-xs font-bold text-cyan-400">{form.soil_ph}</span>
+                  <span className="text-[10px] uppercase text-slate-500 font-mono">Soil pH</span>
+                  <span className="font-mono text-xs font-bold text-blue-400">{form.soil_ph}</span>
                 </div>
                 <input
                   type="number"
@@ -198,14 +192,14 @@ export default function ScoreField() {
                   max="9.5"
                   value={form.soil_ph}
                   onChange={(e) => handleChange('soil_ph', e.target.value)}
-                  className="w-full text-xs bg-slate-900 border-slate-800 font-mono py-1 px-2"
+                  className="w-full text-xs bg-[#0d0f12] border border-slate-800 font-mono py-1 px-2 rounded-lg"
                 />
               </div>
 
-              <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
+              <div className="p-3 bg-[#080a0e] rounded-xl border border-slate-800">
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-[11px] text-slate-400 font-medium">Moisture</span>
-                  <span className="font-mono text-xs font-bold text-cyan-400">{form.moisture_level_percent}%</span>
+                  <span className="text-[10px] uppercase text-slate-500 font-mono">Moisture</span>
+                  <span className="font-mono text-xs font-bold text-blue-400">{form.moisture_level_percent}%</span>
                 </div>
                 <input
                   type="number"
@@ -213,14 +207,14 @@ export default function ScoreField() {
                   max="100"
                   value={form.moisture_level_percent}
                   onChange={(e) => handleChange('moisture_level_percent', e.target.value)}
-                  className="w-full text-xs bg-slate-900 border-slate-800 font-mono py-1 px-2"
+                  className="w-full text-xs bg-[#0d0f12] border border-slate-800 font-mono py-1 px-2 rounded-lg"
                 />
               </div>
 
-              <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
+              <div className="p-3 bg-[#080a0e] rounded-xl border border-slate-800">
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-[11px] text-slate-400 font-medium">Nitrogen</span>
-                  <span className="font-mono text-xs font-bold text-cyan-400">{form.nitrogen_ppm} ppm</span>
+                  <span className="text-[10px] uppercase text-slate-500 font-mono">Nitrogen</span>
+                  <span className="font-mono text-xs font-bold text-blue-400">{form.nitrogen_ppm} ppm</span>
                 </div>
                 <input
                   type="number"
@@ -228,17 +222,17 @@ export default function ScoreField() {
                   max="300"
                   value={form.nitrogen_ppm}
                   onChange={(e) => handleChange('nitrogen_ppm', e.target.value)}
-                  className="w-full text-xs bg-slate-900 border-slate-800 font-mono py-1 px-2"
+                  className="w-full text-xs bg-[#0d0f12] border border-slate-800 font-mono py-1 px-2 rounded-lg"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">Weather Forecast</label>
+              <label className="block text-xs font-medium text-slate-400 mb-1.5">Weather Forecast</label>
               <select
                 value={form.weather_forecast}
                 onChange={(e) => handleChange('weather_forecast', e.target.value)}
-                className="w-full text-xs bg-slate-950 border-slate-800 text-slate-200 rounded-xl"
+                className="w-full text-xs bg-[#080a0e] border border-slate-800 rounded-xl px-3 py-2 text-slate-200 focus:border-blue-500 focus:shadow-[0_0_10px_rgba(37,99,235,0.4)] focus:outline-none"
               >
                 {WEATHER_OPTIONS.map((w) => (
                   <option key={w} value={w}>
@@ -249,53 +243,53 @@ export default function ScoreField() {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1.5">Farmer Observations & Symptoms</label>
+              <label className="block text-xs font-medium text-slate-400 mb-1.5">Farmer Observations & Telemetry Notes</label>
               <textarea
                 rows={3}
                 value={form.farmer_observation}
                 onChange={(e) => handleChange('farmer_observation', e.target.value)}
                 placeholder="Describe leaf discoloration, wilting, lesions, or sensor irregularities..."
-                className="w-full text-xs bg-slate-950 border-slate-800 text-slate-200 rounded-xl p-3"
+                className="w-full text-xs bg-[#080a0e] border border-slate-800 rounded-xl p-3 text-slate-200 focus:border-blue-500 focus:shadow-[0_0_10px_rgba(37,99,235,0.4)] focus:outline-none"
               />
             </div>
 
-            {/* Toggle Checkboxes for Frictionless Sandbox Testing */}
-            <div className="space-y-2 pt-2 border-t border-slate-800">
-              <label className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-slate-800 cursor-pointer hover:bg-slate-900/60 transition-colors">
-                <span className="text-xs text-slate-300">Prioritize Biological / Organic Protocols</span>
+            {/* Frictionless Checkbox Toggles */}
+            <div className="space-y-2 pt-2 border-t border-white/5">
+              <label className="flex items-center justify-between p-2.5 rounded-xl bg-[#080a0e] border border-slate-800 cursor-pointer hover:bg-[#12151b] transition-colors">
+                <span className="text-xs text-slate-300">Prioritize Biological / Organic Interventions</span>
                 <input
                   type="checkbox"
                   checked={form.prioritize_bio}
                   onChange={(e) => handleChange('prioritize_bio', e.target.checked)}
-                  className="w-4 h-4 accent-cyan-500 rounded"
+                  className="w-4 h-4 accent-blue-600 rounded"
                 />
               </label>
 
-              <label className="flex items-center justify-between p-2.5 rounded-xl bg-slate-950 border border-slate-800 cursor-pointer hover:bg-slate-900/60 transition-colors">
+              <label className="flex items-center justify-between p-2.5 rounded-xl bg-[#080a0e] border border-slate-800 cursor-pointer hover:bg-[#12151b] transition-colors">
                 <span className="text-xs text-slate-300">Flag Immediate Subsurface Drainage Need</span>
                 <input
                   type="checkbox"
                   checked={form.emergency_drainage}
                   onChange={(e) => handleChange('emergency_drainage', e.target.checked)}
-                  className="w-4 h-4 accent-cyan-500 rounded"
+                  className="w-4 h-4 accent-blue-600 rounded"
                 />
               </label>
             </div>
 
-            {/* Primary Neon CTA Button */}
+            {/* Glowing Neon Blue Button */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 px-6 rounded-xl font-bold text-white text-sm bg-gradient-to-r from-cyan-500 via-blue-600 to-cyan-500 hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 border border-cyan-400/40"
+              className="w-full py-3 px-6 rounded-xl font-semibold text-white text-xs bg-blue-600 hover:bg-blue-500 hover:shadow-[0_0_15px_rgba(37,99,235,0.5)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 border border-white/10"
             >
               {loading ? (
                 <>
-                  <div className="spinner w-5 h-5 border-2" />
-                  <span>Orchestrating 3-Agent AI Pipeline...</span>
+                  <div className="spinner w-4 h-4 border-2" />
+                  <span>Executing 3-Agent AI Pipeline...</span>
                 </>
               ) : (
                 <>
-                  <Play className="w-4 h-4 fill-white" />
+                  <Play className="w-3.5 h-3.5 fill-white" />
                   <span>Execute Autonomous AI Scoring</span>
                 </>
               )}
@@ -308,18 +302,18 @@ export default function ScoreField() {
           {result ? (
             <div className="space-y-4 animate-fade-in">
               {/* Verdict Banner */}
-              <div className="glass-card p-6 bg-slate-900/90 border border-cyan-500/30 rounded-2xl shadow-xl">
+              <div className="bg-[#0d0f12] border border-blue-500/30 rounded-xl p-6">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-mono font-bold text-cyan-400">
+                  <span className="text-xs font-mono font-bold text-blue-400">
                     DIAGNOSIS COMPLETE: {result.advisory?.field_id}
                   </span>
                   <span
-                    className={`text-xs px-3 py-1 rounded-full font-bold uppercase border ${
+                    className={`text-[10px] px-2.5 py-0.5 rounded border font-mono uppercase font-bold ${
                       result.pipeline_summary?.status === 'AUTO_APPROVED'
-                        ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
+                        ? 'bg-emerald-950/40 text-emerald-400 border-emerald-500/30'
                         : result.pipeline_summary?.status === 'ESCALATED'
-                        ? 'bg-rose-500/20 text-rose-400 border-rose-500/30'
-                        : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+                        ? 'bg-rose-950/40 text-rose-400 border-rose-500/30'
+                        : 'bg-amber-950/40 text-amber-400 border-amber-500/30'
                     }`}
                   >
                     {result.pipeline_summary?.status || 'UNDER_REVIEW'}
@@ -327,16 +321,16 @@ export default function ScoreField() {
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 mb-4">
-                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                    <span className="text-[11px] text-slate-400 block">Classified Issue</span>
-                    <p className="text-sm font-bold text-slate-100 mt-0.5">
+                  <div className="p-3 bg-[#080a0e] rounded-lg border border-white/5">
+                    <span className="text-[10px] uppercase text-slate-500 font-mono block">Classified Issue</span>
+                    <p className="text-xs font-bold text-slate-200 mt-0.5">
                       {result.pipeline_summary?.issue_classification?.replace(/_/g, ' ')}
                     </p>
                   </div>
-                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800">
-                    <span className="text-[11px] text-slate-400 block">Crop Risk Score</span>
+                  <div className="p-3 bg-[#080a0e] rounded-lg border border-white/5">
+                    <span className="text-[10px] uppercase text-slate-500 font-mono block">Crop Risk Score</span>
                     <p
-                      className={`text-sm font-bold font-mono mt-0.5 ${
+                      className={`text-xs font-bold font-mono mt-0.5 ${
                         result.pipeline_summary?.risk_score >= 80 ? 'text-rose-400' : 'text-amber-400'
                       }`}
                     >
@@ -347,7 +341,7 @@ export default function ScoreField() {
 
                 <button
                   onClick={() => navigate(`/advisory/${result.advisory?.id}`)}
-                  className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center justify-center gap-2 border border-slate-700 transition-colors"
+                  className="w-full py-2.5 rounded-lg bg-[#141820] hover:bg-blue-600 text-slate-200 hover:text-white text-xs font-medium flex items-center justify-center gap-2 border border-white/5 transition-all"
                 >
                   <span>Open Deep Advisory Trace Record</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -355,22 +349,22 @@ export default function ScoreField() {
               </div>
 
               {/* Step-by-Step Reasoning Trace */}
-              <div className="glass-card p-6 bg-slate-900/85 border border-slate-800 rounded-2xl">
-                <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider mb-4 flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-cyan-400" />
+              <div className="bg-[#0d0f12] border border-white/5 rounded-xl p-6">
+                <h3 className="text-xs tracking-wider text-slate-500 uppercase font-semibold mb-4 flex items-center gap-2">
+                  <Activity className="w-4 h-4 text-blue-500" />
                   Live 3-Agent Pipeline Execution Chain
                 </h3>
                 <AgentReasoningTrace executionTrace={result.execution_trace} />
               </div>
             </div>
           ) : (
-            <div className="glass-card p-12 text-center bg-slate-900/80 border border-slate-800 rounded-2xl flex flex-col items-center justify-center h-full min-h-[400px]">
-              <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4">
-                <Sparkles className="w-8 h-8" />
+            <div className="bg-[#0d0f12] border border-white/5 rounded-xl p-12 text-center flex flex-col items-center justify-center min-h-[400px]">
+              <div className="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-3">
+                <Sparkles className="w-6 h-6" />
               </div>
-              <h3 className="text-base font-bold text-slate-100 mb-1">Awaiting Telemetry Submission</h3>
-              <p className="text-xs text-slate-400 max-w-sm">
-                Use the sandbox controls or select a preset to watch the multi-agent pipeline execute live.
+              <h3 className="text-sm font-semibold text-slate-200 mb-1">Awaiting Telemetry Submission</h3>
+              <p className="text-xs text-slate-500 max-w-sm">
+                Use the sandbox controls or choose a preset to trigger autonomous agent reasoning.
               </p>
             </div>
           )}

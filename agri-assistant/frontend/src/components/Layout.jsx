@@ -9,7 +9,7 @@ import {
   Share2,
   Activity,
   LogOut,
-  Leaf,
+  Zap,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -32,24 +32,24 @@ export default function Layout() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex font-sans text-slate-100">
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-[#0a0a0a] to-[#050505] flex font-sans text-slate-200">
       {/* Sidebar */}
-      <aside className="w-64 bg-slate-900/90 backdrop-blur-xl border-r border-slate-800 flex flex-col fixed h-full z-20">
+      <aside className="w-64 bg-[#0a0c10] border-r border-white/5 flex flex-col fixed h-full z-20 select-none">
         {/* Logo */}
-        <div className="p-5 border-b border-slate-800">
+        <div className="p-5 border-b border-white/5">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/25 border border-cyan-400/30">
-              <Leaf className="w-5 h-5 text-white" />
+            <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center shadow-[0_0_12px_rgba(37,99,235,0.4)] border border-blue-400/30">
+              <Zap className="w-4 h-4 text-white fill-white" />
             </div>
             <div>
-              <h1 className="text-sm font-bold text-slate-100 tracking-wide">AgriAdvisor AI</h1>
-              <p className="text-[10px] text-cyan-400 font-mono font-semibold">AUTONOMOUS MULTI-AGENT</p>
+              <h1 className="text-sm font-bold text-white tracking-wide">AgriAdvisor</h1>
+              <p className="text-[10px] text-blue-400 font-mono tracking-wider font-semibold">ENTERPRISE INTELLIGENCE</p>
             </div>
           </div>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 py-4 px-3 space-y-1.5 overflow-y-auto">
+        <nav className="flex-1 py-4 space-y-0.5 overflow-y-auto">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             return (
@@ -57,14 +57,14 @@ export default function Layout() {
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 group ${
+                  `flex items-center gap-3 px-4 py-3 text-xs transition-all duration-150 ${
                     isActive
-                      ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/10 text-cyan-300 border border-cyan-500/30 shadow-sm shadow-cyan-500/10'
-                      : 'text-slate-400 hover:text-slate-100 hover:bg-slate-850 border border-transparent'
+                      ? 'text-white font-medium border-l-2 border-blue-500 bg-gradient-to-r from-blue-500/15 to-transparent'
+                      : 'text-slate-500 hover:text-slate-300 border-l-2 border-transparent'
                   }`
                 }
               >
-                <Icon className="w-4 h-4 flex-shrink-0 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                <Icon className="w-4 h-4 flex-shrink-0" />
                 <span className="truncate">{item.label}</span>
               </NavLink>
             );
@@ -72,19 +72,19 @@ export default function Layout() {
         </nav>
 
         {/* User Section */}
-        <div className="p-4 border-t border-slate-800 bg-slate-950/60">
+        <div className="p-4 border-t border-white/5 bg-[#08090c]">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-xs font-bold text-white shadow-md">
+            <div className="w-8 h-8 rounded-lg bg-slate-800 border border-white/10 flex items-center justify-center text-xs font-bold text-slate-200">
               {user?.full_name?.[0]?.toUpperCase() || 'A'}
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs font-semibold text-slate-200 truncate">{user?.full_name || 'Agronomist'}</p>
-              <p className="text-[10px] text-slate-400 truncate font-mono">{user?.email || 'user@farm.com'}</p>
+              <p className="text-[10px] text-slate-500 truncate font-mono">{user?.email || 'user@farm.com'}</p>
             </div>
           </div>
           <button
             onClick={handleLogout}
-            className="w-full text-xs text-slate-400 hover:text-rose-400 transition-colors py-2 rounded-xl hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20 flex items-center justify-center gap-1.5"
+            className="w-full text-xs text-slate-500 hover:text-rose-400 transition-colors py-1.5 rounded-lg hover:bg-rose-500/5 border border-transparent hover:border-rose-500/20 flex items-center justify-center gap-1.5"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span>Sign Out</span>
@@ -93,7 +93,7 @@ export default function Layout() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 ml-64 min-h-screen bg-mesh">
+      <main className="flex-1 ml-64 min-h-screen">
         <div className="p-6 lg:p-8 max-w-7xl mx-auto">
           <Outlet />
         </div>
