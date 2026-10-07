@@ -7,7 +7,7 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:5001',
+        target: 'https://agriadvisor-ai-3f1h.onrender.com/api/v1',
         changeOrigin: true,
       },
     },
