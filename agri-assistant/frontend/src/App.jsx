@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './lib/AuthContext';
+import { AuthProvider } from './lib/AuthContext';
 import Layout from './components/Layout';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
@@ -11,43 +11,6 @@ import PathogenRings from './pages/PathogenRings';
 import AnomalySpikes from './pages/AnomalySpikes';
 import AdvisoryDetail from './pages/AdvisoryDetail';
 import BootSequence from './pages/BootSequence';
-import LoginPage from './pages/LoginPage';
-
-function ProtectedRoute({ children }) {
-  const { isAuthenticated, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-mesh flex items-center justify-center">
-        <div className="spinner" />
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return children;
-}
-
-function PublicRoute({ children }) {
-  const { isAuthenticated, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-mesh flex items-center justify-center">
-        <div className="spinner" />
-      </div>
-    );
-  }
-
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
-  }
-
-  return children;
-}
 
 export default function App() {
   return (
@@ -60,32 +23,8 @@ export default function App() {
           {/* Cinematic Boot Sequence */}
           <Route path="/boot" element={<BootSequence />} />
 
-          {/* Authentication Routes */}
-          <Route
-            path="/login"
-            element={
-              <PublicRoute>
-                <LoginPage />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <PublicRoute>
-                <LoginPage />
-              </PublicRoute>
-            }
-          />
-
-          {/* Protected Application Layout */}
-          <Route
-            element={
-              <ProtectedRoute>
-                <Layout />
-              </ProtectedRoute>
-            }
-          >
+          {/* Core Application Routes - Fully Public & Unprotected for Instant Access */}
+          <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/score-field" element={<ScoreField />} />
             <Route path="/batch-scoring" element={<BatchScoring />} />
@@ -96,7 +35,11 @@ export default function App() {
             <Route path="/advisory/:id" element={<AdvisoryDetail />} />
           </Route>
 
-          {/* Fallback */}
+          {/* Legacy Auth Redirects */}
+          <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/register" element={<Navigate to="/dashboard" replace />} />
+
+          {/* Catch-all Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

@@ -27,8 +27,7 @@ export default function Layout() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
-    navigate('/login');
+    navigate('/');
   };
 
   return (
@@ -84,10 +83,10 @@ export default function Layout() {
           </div>
           <button
             onClick={handleLogout}
-            className="w-full text-xs text-slate-500 hover:text-rose-400 transition-colors py-1.5 rounded-lg hover:bg-rose-500/5 border border-transparent hover:border-rose-500/20 flex items-center justify-center gap-1.5"
+            className="w-full text-xs text-slate-500 hover:text-slate-300 transition-colors py-1.5 rounded-lg hover:bg-white/5 border border-transparent hover:border-white/10 flex items-center justify-center gap-1.5"
           >
             <LogOut className="w-3.5 h-3.5" />
-            <span>Sign Out</span>
+            <span>Exit to Home</span>
           </button>
         </div>
       </aside>

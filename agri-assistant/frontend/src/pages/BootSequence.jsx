@@ -36,8 +36,7 @@ export default function BootSequence() {
   const navigate = useNavigate();
 
   const handleProceed = useCallback(() => {
-    const token = localStorage.getItem('agri_token');
-    navigate(token ? '/dashboard' : '/login');
+    navigate('/dashboard');
   }, [navigate]);
 
   useEffect(() => {

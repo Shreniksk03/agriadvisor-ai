@@ -58,10 +58,10 @@ export default function LandingPage() {
 
           <div className="flex items-center gap-3">
             <button
-              onClick={() => navigate('/login')}
-              className="text-xs text-slate-400 hover:text-white transition-colors px-3 py-1.5"
+              onClick={() => navigate('/dashboard')}
+              className="text-xs text-slate-400 hover:text-white transition-colors px-3 py-1.5 font-medium"
             >
-              Sign In
+              Enter Console
             </button>
             <button
               onClick={handleStart}
