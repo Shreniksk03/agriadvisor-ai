@@ -40,23 +40,23 @@ export function SpotlightCard({ children, className = '' }) {
     <div 
       ref={cardRef}
       onMouseMove={handleCardMouseMove}
-      className={`relative flex flex-col rounded-xl border border-white/5 bg-slate-950 overflow-hidden group/card ${className}`}
+      className={`relative flex flex-col rounded-xl border border-white/10 bg-[#05070D]/50 backdrop-blur-md overflow-hidden group/card transition-all duration-300 hover:border-white/20 hover:shadow-[0_8px_32px_rgba(0,0,0,0.5)] ${className}`}
     >
       {/* 1. THE BRIGHT BORDER FLARE */}
       {/* Forces a sharp white glow that peaks through the 1px gap */}
       <div 
         className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100 group-hover/card:opacity-100 hover:opacity-100 z-0"
         style={{
-          background: 'radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.8), transparent 40%)'
+          background: 'radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.4), transparent 40%)'
         }}
       />
       
-      {/* 2. THE DARK MASK */}
-      {/* Pitch black inner surface to block the center of the white gradient, leaving only the border exposed */}
-      <div className="absolute inset-[1px] rounded-xl bg-[#07090e] z-10" />
+      {/* 2. THE GLASS MASK */}
+      {/* Dark glassmorphic inner surface allowing background glow and waves to diffuse through */}
+      <div className="absolute inset-[1px] rounded-xl bg-[#05070D]/60 backdrop-blur-md z-10" />
 
       {/* 3. THE SOFT INNER HIGHLIGHT */}
-      {/* Replicates the exact soft blue/purple wash over the text/icons from the reference video */}
+      {/* Replicates the soft blue/purple wash over the text/icons */}
       <div 
         className="pointer-events-none absolute inset-0 rounded-xl opacity-0 transition duration-300 group-hover:opacity-100 group-hover/card:opacity-100 hover:opacity-100 z-20"
         style={{
