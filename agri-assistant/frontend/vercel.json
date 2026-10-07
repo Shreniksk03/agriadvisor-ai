@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+        {
+            "source": "/api/v1/:match*",
+            "destination": "https://agriadvisor-ai-3f1h.onrender.com/api/v1/:match*"
+        }
+    ]
+}
